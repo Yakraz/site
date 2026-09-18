@@ -102,10 +102,10 @@ check(
   fakeDocument.documentElement.lang === 'ru',
   'html lang should be ru after switch',
 );
-const sample = domEls.find((e) => e.nodeData.key === 'k0003');
+const sample = domEls.find((e) => e.nodeData.key === 'k0008');
 check(
-  sample && sample.textContent === i18n.ru.k0003,
-  'k0003 should show RU "Возможности"',
+  sample && sample.textContent === i18n.ru.k0008,
+  'k0008 should show RU "Скачать приложение"',
 );
 
 vm.runInContext("switchLanguage('en')", context);
@@ -113,10 +113,10 @@ check(
   fakeDocument.documentElement.lang === 'en',
   'html lang should be en after switch',
 );
-const sampleEn = domEls.find((e) => e.nodeData.key === 'k0003');
+const sampleEn = domEls.find((e) => e.nodeData.key === 'k0008');
 check(
-  sampleEn && sampleEn.textContent === i18n.en.k0003,
-  'k0003 should show EN "Features"',
+  sampleEn && sampleEn.textContent === i18n.en.k0008,
+  'k0008 should show EN "Download App"',
 );
 
 if (errors.length) {

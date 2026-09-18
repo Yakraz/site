@@ -4,11 +4,6 @@ const i18n = {
   en: {
     k0001: 'Yakraz',
     k0002: 'AI Health Companion',
-    k0003: 'Features',
-    k0004: 'Med AI',
-    k0005: 'Medications',
-    k0006: 'Appointments',
-    k0007: 'Security & Privacy',
     k0008: 'Download App',
     k0009: 'Your Personal AI Health Companion',
     k0010:
@@ -168,7 +163,6 @@ const i18n = {
     k0139: 'Available on iOS',
     k0140: 'Install on your iPhone or iPad',
     k0141: 'Download on the App Store',
-    k0142: 'Scan with camera',
     k0143: 'Designed for iOS 18+ on iPhone & iPad • Zero Cloud Required',
     k0144: 'Yakraz',
     k0145:
@@ -195,15 +189,14 @@ const i18n = {
     k0165: 'Privacy Policy',
     k0166: 'Terms of Service',
     k0167: 'Security Protocol',
+    k0168: 'Coming Soon',
+    k0169:
+      "We're putting the finishing touches on this. It will be available shortly — thank you for your patience!",
+    k0170: 'Got It',
   },
   ru: {
     k0001: 'Yakraz',
     k0002: 'AI-компаньон здоровья',
-    k0003: 'Возможности',
-    k0004: 'Med AI',
-    k0005: 'Лекарства',
-    k0006: 'Записи',
-    k0007: 'Безопасность и приватность',
     k0008: 'Скачать приложение',
     k0009: 'Ваш персональный AI-компаньон здоровья',
     k0010:
@@ -364,7 +357,6 @@ const i18n = {
     k0139: 'Доступно на iOS',
     k0140: 'Установите на iPhone или iPad',
     k0141: 'Скачать в App Store',
-    k0142: 'Сканируйте камерой',
     k0143: 'Создано для iOS 18+ на iPhone и iPad • Без облака',
     k0144: 'Yakraz',
     k0145:
@@ -391,6 +383,10 @@ const i18n = {
     k0165: 'Политика конфиденциальности',
     k0166: 'Условия использования',
     k0167: 'Протокол безопасности',
+    k0168: 'Скоро',
+    k0169:
+      'Мы добавляем финальные штрихи. Скоро всё будет доступно — спасибо за терпение!',
+    k0170: 'Понятно',
   },
 };
 
@@ -405,7 +401,7 @@ function switchLanguage(lang) {
   currentLang = lang;
   try {
     localStorage.setItem('yakraz-lang', lang);
-  } catch {}
+  } catch { }
   document.documentElement.lang = lang === 'ru' ? 'ru' : 'en';
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     const key = el.getAttribute('data-i18n');
@@ -421,5 +417,5 @@ try {
   if (saved && i18n[saved]) {
     currentLang = saved;
   }
-} catch {}
+} catch { }
 switchLanguage(currentLang);

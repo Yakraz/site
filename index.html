@@ -41,6 +41,52 @@
         ::-webkit-scrollbar {
             display: none;
         }
+
+        @keyframes coming-soon-backdrop {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes coming-soon-panel {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(0.94);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes coming-soon-float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .coming-soon-backdrop {
+            animation: coming-soon-backdrop 0.3s ease-out both;
+        }
+
+        .coming-soon-panel {
+            animation: coming-soon-panel 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .coming-soon-icon {
+            animation: coming-soon-float 3s ease-in-out infinite;
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwind-config.js"></script>
@@ -51,7 +97,7 @@
     <header
         class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(13,59,130,0.05)]">
         <div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between"><a
-                class="flex items-center gap-3 group" data-path="features" href="#">
+                class="flex items-center gap-3 group" data-path="overview" href="#overview">
                 <img src="assets/img/yakraz-logo.svg" alt="Yakraz" class="w-10 h-10" />
                 <div class="flex flex-col"><span
                         class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight leading-none"
@@ -60,23 +106,9 @@
                         data-i18n="k0002">AI Health
                         Companion</span></div>
             </a>
-            <nav class="hidden lg:flex items-center gap-8"
-                data-active-classes="text-primary font-semibold relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-secondary rounded-none">
-                <a aria-current="page"
-                    class="transition-colors py-1 text-primary font-semibold relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-secondary rounded-none"
-                    data-path="features" href="#" data-i18n="k0003">Features</a><a
-                    class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
-                    data-path="med-ai" href="#" data-i18n="k0004">Med AI</a><a
-                    class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
-                    data-path="medications" href="#" data-i18n="k0005">Medications</a><a
-                    class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
-                    data-path="appointments" href="#" data-i18n="k0006">Appointments</a><a
-                    class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors py-1"
-                    data-path="security-and-privacy" href="#" data-i18n="k0007">Security &amp; Privacy</a>
-            </nav>
             <div class="flex items-center gap-4"><a
                     class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary-container text-on-primary font-headline-sm text-body-sm font-semibold tracking-wide hover:bg-primary transition-all duration-200 shadow-[0_4px_16px_-2px_rgba(13,59,130,0.3)] active:scale-[0.98]"
-                    data-path="download-app" href="#" data-i18n="k0008">Download App</a><button id="langToggle"
+                    data-path="download-app" data-coming-soon href="#" data-i18n="k0008">Download App</a><button id="langToggle"
                     type="button" aria-haspopup="listbox" aria-expanded="false"
                     class="inline-flex items-center justify-center gap-1.5 px-3 h-9 rounded-full bg-surface-container-low text-on-surface-variant font-label-caps text-label-caps font-semibold tracking-wide hover:bg-surface-container-high transition-all duration-200 active:scale-[0.98]"
                     title="Switch language / Сменить язык"><span
@@ -88,7 +120,7 @@
     <main class="w-full pt-20 bg-surface min-h-[calc(100vh-80px)]">
         <div class="flex flex-col w-full">
             <!-- HERO SECTION -->
-            <section class="relative w-full overflow-hidden pt-8 pb-20 lg:pt-14 lg:pb-32">
+            <section id="download-app" class="relative w-full overflow-hidden pt-8 pb-20 lg:pt-14 lg:pb-32">
                 <!-- Ambient Radial Illumination -->
                 <div
                     class="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[520px] bg-gradient-to-tr from-secondary/10 via-secondary-container/15 to-transparent blur-3xl rounded-full">
@@ -122,19 +154,10 @@
                         <!-- CTA Action Cluster -->
                         <div class="flex flex-wrap items-center justify-center gap-4 mb-8">
                             <a class="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-primary-container text-on-primary font-headline-sm text-body-md font-semibold hover:bg-primary shadow-lg transition-all transform active:scale-95"
-                                href="#">
+                                data-coming-soon href="#">
                                 <span class="material-symbols-outlined text-[22px]">file_download</span>
                                 <span data-i18n="k0012">Download for iOS</span>
                             </a>
-                            <button
-                                class="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-surface-container-lowest text-primary font-headline-sm text-body-md font-semibold shadow-md hover:bg-surface-container transition-all"
-                                id="heroPlayTrigger">
-                                <span
-                                    class="w-7 h-7 rounded-full bg-secondary/15 flex items-center justify-center text-secondary">
-                                    <span class="material-symbols-outlined text-[18px]">play_arrow</span>
-                                </span>
-                                <span data-i18n="k0013">Watch How Med AI Works</span>
-                            </button>
                         </div>
                         <!-- Trust Tokens -->
                         <div
@@ -277,10 +300,6 @@
                                                 Intent Parser</p>
                                         </div>
                                     </div>
-                                    <span
-                                        class="px-2.5 py-0.5 rounded-full bg-secondary/10 text-secondary font-label-mono-sm text-[11px] font-semibold"
-                                        data-i18n="k0034">0
-                                        ms Network Latency</span>
                                 </div>
                                 <!-- Natural User Prompt -->
                                 <div class="flex items-start justify-end gap-2.5 my-1">
@@ -378,7 +397,7 @@
                 </div>
             </section>
             <!-- SECTION 2: "WHAT IS YAKRAZ?" -->
-            <section class="w-full bg-surface-container-lowest py-20 lg:py-28">
+            <section id="overview" class="w-full bg-surface-container-lowest py-20 lg:py-28 scroll-mt-20">
                 <div class="max-w-7xl mx-auto px-6 lg:px-12">
                     <!-- Section Header -->
                     <div class="max-w-3xl mb-16">
@@ -487,7 +506,7 @@
                 </div>
             </section>
             <!-- SECTION 3: "THE POWER OF MED AI 🧠" SHOWCASE -->
-            <section class="w-full py-20 lg:py-32 bg-surface">
+            <section id="med-ai" class="w-full py-20 lg:py-32 bg-surface scroll-mt-20">
                 <div class="max-w-7xl mx-auto px-6 lg:px-12">
                     <!-- Section Title -->
                     <div class="text-center max-w-3xl mx-auto mb-16">
@@ -721,7 +740,7 @@
                 </div>
             </section>
             <!-- SECTION 4: "WHY PEOPLE LOVE YAKRAZ" -->
-            <section class="w-full bg-surface-container-low py-20 lg:py-28">
+            <section id="features" class="w-full bg-surface-container-low py-20 lg:py-28 scroll-mt-20">
                 <div class="max-w-7xl mx-auto px-6 lg:px-12">
                     <!-- Section Header -->
                     <div class="max-w-2xl mb-16">
@@ -884,7 +903,8 @@
                 </div>
             </section>
             <!-- SECTION 5: "FEATURE HIGHLIGHTS" COMPARISON / MATRIX TABLE -->
-            <section class="w-full bg-surface-container-lowest py-20 lg:py-28">
+            <section id="compare"
+                class="w-full bg-surface-container-lowest py-20 lg:py-28 scroll-mt-20">
                 <div class="max-w-7xl mx-auto px-6 lg:px-12">
                     <div class="text-center max-w-3xl mx-auto mb-16">
                         <span
@@ -996,27 +1016,8 @@
                                         <span class="material-symbols-outlined text-[18px]">check_circle</span>
                                         Formatted 1-Click PDF
                                     </td>
-                                    <td class="py-4 px-6 text-outline" data-i18n="k0132">Raw CSV export only</td>
-                                    <td class="py-4 px-6 text-outline" data-i18n="k0133">Unformatted plain text</td>
-                                </tr>
-                                <!-- Row 6 -->
-                                <tr class="hover:bg-surface transition-colors">
-                                    <td class="py-4 px-6 font-semibold text-primary">
-                                        100% Local &amp; Private
-                                        <span class="block font-normal text-xs text-on-surface-variant"
-                                            data-i18n="k0134">Zero server
-                                            upload of sensitive PHI data</span>
-                                    </td>
-                                    <td class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5">
-                                        <span class="material-symbols-outlined text-[18px]">check_circle</span>
-                                        On-Device Apple Silicon
-                                    </td>
-                                    <td class="py-4 px-6 text-on-surface-variant" data-i18n="k0135">Cloud sync required
-                                    </td>
-                                    <td class="py-4 px-6 text-error flex items-center gap-1">
-                                        <span class="material-symbols-outlined text-[16px]">warning</span> Third-party
-                                        data training
-                                    </td>
+                                    <td class="py-4 px-6 text-outline" data-i18n="k0132">No</td>
+                                    <td class="py-4 px-6 text-outline" data-i18n="k0133">No</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1042,61 +1043,6 @@
                         shoebox for your medical papers. Yakraz brings it all together — and hands it to an assistant
                         that does the thinking for you.
                     </p>
-                    <p class="font-body-md text-body-md text-primary font-semibold max-w-xl mx-auto mb-10"
-                        data-i18n="k0138">
-                        Download Yakraz, start talking to Med AI, and let the future of health management worry about
-                        the details — so you can focus on living well.
-                    </p>
-                    <!-- CTA Actions & QR Scanning Box -->
-                    <div
-                        class="bg-surface-container-lowest rounded-2xl p-8 max-w-xl mx-auto shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 mb-8">
-                        <div class="flex flex-col items-center sm:items-start text-center sm:text-left">
-                            <span
-                                class="font-label-caps text-label-caps text-secondary uppercase font-bold tracking-wider mb-1"
-                                data-i18n="k0139">
-                                Available on iOS
-                            </span>
-                            <h3 class="font-headline-sm text-body-lg font-bold text-primary mb-3" data-i18n="k0140">
-                                Install on your iPhone
-                                or iPad</h3>
-                            <a class="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-primary-container text-on-primary font-headline-sm text-body-sm font-semibold hover:bg-primary transition-colors shadow-md"
-                                href="#">
-                                <span class="material-symbols-outlined text-[20px]">download</span>
-                                <span data-i18n="k0141">Download on the App Store</span>
-                            </a>
-                        </div>
-                        <!-- Simulated Crisp QR Code for Instant Sync -->
-                        <div class="flex flex-col items-center p-3 rounded-xl bg-surface-container-low shadow-sm">
-                            <div
-                                class="w-24 h-24 bg-surface-container-lowest p-2 rounded-lg flex items-center justify-center shadow-inner">
-                                <svg class="w-full h-full text-primary" fill="currentColor" viewbox="0 0 100 100">
-                                    <rect height="30" rx="4" width="30" x="0" y="0"></rect>
-                                    <rect height="30" rx="4" width="30" x="70" y="0"></rect>
-                                    <rect height="30" rx="4" width="30" x="0" y="70"></rect>
-                                    <rect fill="#ffffff" height="14" width="14" x="8" y="8"></rect>
-                                    <rect fill="#ffffff" height="14" width="14" x="78" y="8"></rect>
-                                    <rect fill="#ffffff" height="14" width="14" x="8" y="78"></rect>
-                                    <rect height="10" width="20" x="40" y="10"></rect>
-                                    <rect height="20" rx="3" width="20" x="40" y="40"></rect>
-                                    <rect height="15" width="15" x="10" y="40"></rect>
-                                    <rect height="12" width="20" x="70" y="45"></rect>
-                                    <rect height="15" width="15" x="45" y="75"></rect>
-                                    <rect height="18" width="18" x="75" y="75"></rect>
-                                </svg>
-                            </div>
-                            <span class="font-label-mono-sm text-[10px] text-on-surface-variant mt-1.5 font-medium"
-                                data-i18n="k0142">Scan
-                                with camera</span>
-                        </div>
-
-                    </div>
-
-                    <!-- Compatibility Footer Chip -->
-                    <div
-                        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container text-on-surface-variant font-label-mono-sm text-label-mono-sm">
-                        <span class="material-symbols-outlined text-secondary text-[16px]">devices</span>
-                        <span data-i18n="k0143">Designed for iOS 18+ on iPhone &amp; iPad • Zero Cloud Required</span>
-                    </div>
                 </div>
             </section>
         </div>
@@ -1118,93 +1064,56 @@
                         Personalized,
                         privacy-first clinical intelligence engineered to track biometrics, reconcile pharmacotherapy,
                         and guide appointments with precision.</p>
-                    <div class="flex items-center gap-3">
-                        <div
-                            class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-lowest shadow-sm">
-                            <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span
-                                class="font-label-mono-sm text-label-mono-sm text-on-surface-variant font-medium"
-                                data-i18n="k0146">Local
-                                Neural Engine v2.4</span>
-                        </div>
-                    </div>
                 </div>
-                <div class="flex flex-col gap-3"><span
-                        class="font-label-caps text-label-caps text-primary uppercase tracking-wider mb-2"
-                        data-i18n="k0147">Clinical
-                        Modules</span><a
-                        class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="med-ai" href="#" data-i18n="k0148">Diagnostic Med AI</a><a
-                        class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="medications" href="#" data-i18n="k0149">Medication Adherence</a><a
-                        class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="appointments" href="#" data-i18n="k0150">Clinical Visits</a><a
-                        class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="features" href="#" data-i18n="k0151">EHR Sync Telemetry</a></div>
-                <div class="flex flex-col gap-3"><span
-                        class="font-label-caps text-label-caps text-primary uppercase tracking-wider mb-2"
-                        data-i18n="k0152">Privacy &amp;
-                        Trust</span><a
-                        class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="security-and-privacy" href="#" data-i18n="k0153">Zero-Knowledge Architecture</a><a
-                        class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="security-and-privacy" href="#" data-i18n="k0154">HIPAA Verification</a><a
-                        class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="security-and-privacy" href="#" data-i18n="k0155">On-Device Privacy Core</a><a
-                        class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors"
-                        data-path="security-and-privacy" href="#" data-i18n="k0156">Data Sovereign Export</a></div>
-                <div class="flex flex-col gap-3"><span
-                        class="font-label-caps text-label-caps text-primary uppercase tracking-wider mb-2"
-                        data-i18n="k0157">Mobile
-                        Experience</span>
-                    <p class="font-body-sm text-body-sm text-on-surface-variant mb-1" data-i18n="k0158">Install on iOS
-                        &amp; iPadOS for
-                        background health sync.</p>
-                    <div class="flex flex-col gap-2.5"><a
-                            class="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container transition-colors"
-                            data-path="download-app" href="#"><span
-                                class="material-symbols-outlined text-primary text-[24px]">phone_iphone</span>
-                            <div class="flex flex-col text-left"><span
-                                    class="font-label-caps text-[9px] uppercase leading-none text-on-surface-variant"
-                                    data-i18n="k0159">Download
-                                    on the</span><span
-                                    class="font-headline-sm text-body-sm text-primary font-semibold leading-tight"
-                                    data-i18n="k0160">App
-                                    Store</span></div>
-                        </a><a
-                            class="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-surface-container-lowest shadow-sm hover:bg-surface-container transition-colors"
-                            data-path="download-app" href="#"><span
-                                class="material-symbols-outlined text-primary text-[24px]">android</span>
-                            <div class="flex flex-col text-left"><span
-                                    class="font-label-caps text-[9px] uppercase leading-none text-on-surface-variant"
-                                    data-i18n="k0161">Get
-                                    it on</span><span
-                                    class="font-headline-sm text-body-sm text-primary font-semibold leading-tight"
-                                    data-i18n="k0162">Google
-                                    Play</span></div>
-                        </a></div>
-                </div>
-            </div>
-            <div class="pt-8 pb-4 bg-surface-container/50 rounded-xl px-6 mb-8 text-center md:text-left">
-                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed"><span
-                        class="font-semibold text-primary" data-i18n="k0163">Clinical Disclaimer:</span> Yakraz provides
-                    supportive health
-                    intelligence and medication tracking powered by on-device AI models. It does not provide definitive
-                    medical diagnoses or replace emergency medical evaluations. In life-threatening emergencies, dial
-                    your local emergency services immediately.</p>
             </div>
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
-                <p class="font-body-sm text-body-sm text-on-surface-variant" data-i18n="k0164">© 2025 Yakraz Health
-                    Systems, Inc. All
+                <p class="font-body-sm text-body-sm text-on-surface-variant" data-i18n="k0164">© 2026 Yakraz All
                     rights reserved.</p>
                 <div class="flex items-center gap-6 font-body-sm text-body-sm text-on-surface-variant"><a
-                        class="hover:text-primary transition-colors" data-path="security-and-privacy" href="#"
-                        data-i18n="k0165">Privacy
+                        class="hover:text-primary transition-colors" data-path="security-and-privacy" data-coming-soon
+                        href="#" data-i18n="k0165">Privacy
                         Policy</a><a class="hover:text-primary transition-colors" data-path="security-and-privacy"
-                        href="#" data-i18n="k0166">Terms of Service</a><a class="hover:text-primary transition-colors"
-                        data-path="security-and-privacy" href="#" data-i18n="k0167">Security Protocol</a></div>
+                        data-coming-soon href="#" data-i18n="k0166">Terms of Service</a><a
+                        class="hover:text-primary transition-colors" data-path="security-and-privacy" data-coming-soon
+                        href="#" data-i18n="k0167">Security Protocol</a></div>
             </div>
         </div>
     </footer>
+    <!-- COMING SOON DIALOG -->
+    <div id="comingSoonDialog" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4" role="dialog"
+        aria-modal="true" aria-labelledby="comingSoonTitle" aria-hidden="true">
+        <div class="coming-soon-backdrop absolute inset-0 bg-primary/30 backdrop-blur-md" data-dialog-close></div>
+        <div data-dialog-panel
+            class="coming-soon-panel relative w-full max-w-sm rounded-3xl bg-surface border border-outline-variant/50 shadow-[0_24px_64px_-16px_rgba(13,59,130,0.45)] p-8 text-center overflow-hidden"
+            tabindex="-1">
+            <div
+                class="pointer-events-none absolute -top-20 -right-20 w-56 h-56 bg-secondary-container/30 blur-3xl rounded-full">
+            </div>
+            <div
+                class="pointer-events-none absolute -bottom-24 -left-24 w-56 h-56 bg-primary-fixed/30 blur-3xl rounded-full">
+            </div>
+            <button type="button" aria-label="Close"
+                class="absolute top-4 right-4 inline-flex items-center justify-center w-9 h-9 rounded-full text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors"
+                data-dialog-close>
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+            <div class="relative">
+                <div
+                    class="coming-soon-icon mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-primary-container text-secondary-container shadow-[0_12px_24px_-8px_rgba(13,59,130,0.5)]">
+                    <span class="material-symbols-outlined text-[36px]">construction</span>
+                </div>
+                <h3 id="comingSoonTitle" class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight"
+                    data-i18n="k0168">Coming Soon</h3>
+                <p class="mt-3 font-body-md text-body-md text-on-surface-variant leading-relaxed" data-i18n="k0169">
+                    We're putting the finishing touches on this. It will be available shortly —
+                    thank you for your patience!
+                </p>
+                <button type="button" data-dialog-close
+                    class="mt-7 inline-flex items-center justify-center px-7 py-3 rounded-full bg-primary text-on-primary font-headline-sm text-body-sm font-semibold tracking-wide hover:bg-primary-container transition-all duration-200 shadow-[0_4px_16px_-2px_rgba(13,59,130,0.3)] active:scale-[0.98]"
+                    data-i18n="k0170">Got It</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
