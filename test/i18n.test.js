@@ -70,21 +70,26 @@ vm.runInContext(translationsSrc, context);
 const i18n = vm.runInContext('i18n', context);
 
 // --- Dictionaries must be complete and symmetric ---
-check(i18n.en && i18n.ru, 'i18n.en / i18n.ru missing');
+check(i18n.en && i18n.ru && i18n.be, 'i18n.en / i18n.ru / i18n.be missing');
 const enKeys = Object.keys(i18n.en || {});
 const ruKeys = Object.keys(i18n.ru || {});
+const beKeys = Object.keys(i18n.be || {});
 check(
-  enKeys.length === ruKeys.length,
-  `en/ru key count mismatch: ${enKeys.length} vs ${ruKeys.length}`,
+  enKeys.length === ruKeys.length && enKeys.length === beKeys.length,
+  `en/ru/be key count mismatch: ${enKeys.length} / ${ruKeys.length} / ${beKeys.length}`,
 );
 check(
-  JSON.stringify([...enKeys].sort()) === JSON.stringify([...ruKeys].sort()),
-  'en/ru key sets differ',
+  JSON.stringify([...enKeys].sort()) === JSON.stringify([...ruKeys].sort()) &&
+    JSON.stringify([...enKeys].sort()) === JSON.stringify([...beKeys].sort()),
+  'en/ru/be key sets differ',
 );
 
-// Every HTML key must exist in both dicts; every dict key must be used in HTML
+// Every HTML key must exist in all dicts; every dict key must be used in HTML
 const missing = htmlKeys.filter(
-  (k) => !(k in (i18n.en || {})) || !(k in (i18n.ru || {})),
+  (k) =>
+    !(k in (i18n.en || {})) ||
+    !(k in (i18n.ru || {})) ||
+    !(k in (i18n.be || {})),
 );
 check(
   missing.length === 0,
@@ -106,6 +111,17 @@ const sample = domEls.find((e) => e.nodeData.key === 'k0008');
 check(
   sample && sample.textContent === i18n.ru.k0008,
   'k0008 should show RU "Скачать приложение"',
+);
+
+vm.runInContext("switchLanguage('be')", context);
+check(
+  fakeDocument.documentElement.lang === 'be',
+  'html lang should be be after switch',
+);
+const sampleBe = domEls.find((e) => e.nodeData.key === 'k0008');
+check(
+  sampleBe && sampleBe.textContent === i18n.be.k0008,
+  'k0008 should show BE "Спампаваць дадатак"',
 );
 
 vm.runInContext("switchLanguage('en')", context);
@@ -131,6 +147,10 @@ console.log(
     enKeys.length +
     ' en / ' +
     ruKeys.length +
-    ' ru dictionary entries, complete & symmetric',
+    ' ru / ' +
+    beKeys.length +
+    ' be dictionary entries, complete & symmetric',
 );
-console.log('  - language switch ru<=>en works (html lang + element text)');
+console.log(
+  '  - language switch en<=>ru<=>be works (html lang + element text)',
+);

@@ -8,15 +8,18 @@ if (playBtn) {
   });
 }
 
-// Language toggle (EN / RU)
+// Language toggle (EN / RU / BE) — cycles through the languages on click
 const langToggle = document.getElementById('langToggle');
 const langLabel = document.getElementById('langLabel');
 if (langToggle && langLabel && typeof switchLanguage === 'function') {
+  const langCycle = ['en', 'ru', 'be'];
   const updateLabel = () => {
     langLabel.textContent = (currentLang || 'en').toUpperCase();
   };
   langToggle.addEventListener('click', () => {
-    switchLanguage(currentLang === 'en' ? 'ru' : 'en');
+    const next =
+      langCycle[(langCycle.indexOf(currentLang) + 1) % langCycle.length];
+    switchLanguage(next);
     updateLabel();
   });
   // Ensure label reflects the initial (possibly persisted) language
