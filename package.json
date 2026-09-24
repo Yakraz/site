@@ -7,7 +7,6 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "node test/i18n.test.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",

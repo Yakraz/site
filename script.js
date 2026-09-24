@@ -3,27 +3,9 @@ const playBtn = document.getElementById('heroPlayTrigger');
 if (playBtn) {
   playBtn.addEventListener('click', () => {
     alert(
-      'Med AI Demonstration: Yakraz processes natural language commands directly on your device using local neural models without transmitting sensitive medical data to external clouds.',
+      'Демонстрация Med AI: Yakraz обрабатывает команды на естественном языке прямо на вашем устройстве с помощью локальных нейросетевых моделей, не передавая конфиденциальные медицинские данные во внешние облака.',
     );
   });
-}
-
-// Language toggle (EN / RU / BE) — cycles through the languages on click
-const langToggle = document.getElementById('langToggle');
-const langLabel = document.getElementById('langLabel');
-if (langToggle && langLabel && typeof switchLanguage === 'function') {
-  const langCycle = ['en', 'ru', 'be'];
-  const updateLabel = () => {
-    langLabel.textContent = (currentLang || 'en').toUpperCase();
-  };
-  langToggle.addEventListener('click', () => {
-    const next =
-      langCycle[(langCycle.indexOf(currentLang) + 1) % langCycle.length];
-    switchLanguage(next);
-    updateLabel();
-  });
-  // Ensure label reflects the initial (possibly persisted) language
-  updateLabel();
 }
 
 // "Coming Soon" dialog — footer legal links (Privacy Policy, Terms of Service,
@@ -58,10 +40,4 @@ document.addEventListener('click', (event) => {
 
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') closeComingSoon();
-});
-
-// translations.js executes before the footer and dialog are parsed, so re-apply
-// the active language once the full document is ready.
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof switchLanguage === 'function') switchLanguage(currentLang);
 });
