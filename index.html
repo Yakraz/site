@@ -87,6 +87,356 @@
         .coming-soon-icon {
             animation: coming-soon-float 3s ease-in-out infinite;
         }
+
+        /* ===== Interaction layer ===== */
+
+        /* Scroll progress bar */
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 60;
+            width: 100%;
+            height: 3px;
+            pointer-events: none;
+            background: linear-gradient(90deg, #006b5f, #00bfa5, #44ddc1);
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+        }
+
+        /* Smart header: elevate on scroll, hide on scroll down */
+        .site-header {
+            transition:
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s ease;
+        }
+
+        .site-header.nav-scrolled {
+            box-shadow: 0 10px 32px -10px rgba(13, 59, 130, 0.22);
+        }
+
+        .site-header.nav-hidden {
+            transform: translateY(-100%);
+        }
+
+        /* Main nav links + scrollspy underline */
+        .nav-link {
+            position: relative;
+            padding: 0.25rem 0;
+            font-weight: 600;
+            color: #434751;
+            transition: color 0.25s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, #006b5f, #00bfa5);
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .nav-link:hover,
+        .nav-link.nav-active {
+            color: #006b5f;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.nav-active::after {
+            transform: scaleX(1);
+        }
+
+        /* Scroll reveal system (elements are tagged from JS) */
+        [data-reveal] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transition-delay: var(--reveal-delay, 0ms);
+            will-change: opacity, transform;
+        }
+
+        [data-reveal='left'] {
+            transform: translateX(-44px);
+        }
+
+        [data-reveal='right'] {
+            transform: translateX(44px);
+        }
+
+        [data-reveal='zoom'] {
+            transform: scale(0.94) translateY(16px);
+        }
+
+        [data-reveal].reveal-in {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* 3D tilt surface */
+        [data-tilt] {
+            will-change: transform;
+            transform-style: preserve-3d;
+        }
+
+        /* Cards with a glow that follows the cursor */
+        .glow-card {
+            position: relative;
+        }
+
+        .glow-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 50%),
+                    rgba(0, 191, 165, 0.14),
+                    transparent 65%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .glow-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Gentle floating decoration */
+        @keyframes float-y {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-14px);
+            }
+        }
+
+        .animate-float {
+            animation: float-y 6s ease-in-out infinite;
+        }
+
+        /* Pulsing status dot */
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 191, 165, 0.55);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 191, 165, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 191, 165, 0);
+            }
+        }
+
+        .pulse-ring {
+            border-radius: 9999px;
+            animation: pulse-ring 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Hero mockup entrance */
+        @keyframes rise-in {
+            from {
+                opacity: 0;
+                transform: translateY(36px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .rise-in {
+            animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+        }
+
+        /* Hero chat bubbles */
+        .chat-bubble {
+            opacity: 0;
+            transform: translateY(16px) scale(0.97);
+            transition:
+                opacity 0.5s ease,
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .chat-bubble.chat-in {
+            opacity: 1;
+            transform: none;
+        }
+
+        @keyframes typing-bounce {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+
+            30% {
+                transform: translateY(-4px);
+                opacity: 1;
+            }
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 9999px;
+            background: #006b5f;
+            animation: typing-bounce 1.1s ease-in-out infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        /* Typewriter caret */
+        @keyframes caret-blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .typewriter-caret::after {
+            content: '▍';
+            margin-left: 2px;
+            color: #68fadd;
+            animation: caret-blink 0.9s steps(1) infinite;
+        }
+
+        /* Animated adherence ring */
+        [data-ring] {
+            transition: stroke-dasharray 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+        }
+
+        /* Magnetic buttons */
+        .magnetic {
+            will-change: transform;
+            transition:
+                transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.25s ease,
+                background-color 0.25s ease;
+        }
+
+        /* Click ripple */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple-ink {
+            position: absolute;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.45);
+            transform: scale(0);
+            pointer-events: none;
+            animation: ripple-anim 0.65s ease-out forwards;
+        }
+
+        @keyframes ripple-anim {
+            to {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        /* Animated gradient CTA */
+        @keyframes gradient-pan {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .cta-animated {
+            background: linear-gradient(120deg, #0d3b82, #006b5f, #0d3b82);
+            background-size: 220% 220%;
+            animation: gradient-pan 6s ease infinite;
+        }
+
+        /* Back to top */
+        #backToTop {
+            position: fixed;
+            right: 1.5rem;
+            bottom: 1.5rem;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            color: #ffffff;
+            background: #0d3b82;
+            box-shadow: 0 12px 28px -8px rgba(13, 59, 130, 0.5);
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(16px) scale(0.9);
+            pointer-events: none;
+            transition:
+                opacity 0.35s ease,
+                transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.25s ease;
+        }
+
+        #backToTop:hover {
+            background: #00265d;
+        }
+
+        #backToTop.show {
+            opacity: 1;
+            transform: none;
+            pointer-events: auto;
+        }
+
+        /* Respect users who prefer less motion */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            [data-reveal],
+            .chat-bubble {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
     </style>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwind-config.js"></script>
@@ -94,15 +444,23 @@
 
 <body
     class="bg-surface font-body-md text-on-surface antialiased min-h-screen selection:bg-secondary-container selection:text-on-secondary-container">
+    <div id="scrollProgress" aria-hidden="true"></div>
     <header
-        class="fixed top-0 left-0 right-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(13,59,130,0.05)]">
+        class="site-header fixed top-0 left-0 right-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(13,59,130,0.05)]">
         <div class="h-20 max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between"><a
                 class="flex items-center gap-3 group" data-path="overview" href="#overview">
                 <img src="assets/img/yakraz-logo.svg" alt="Yakraz" class="w-10 h-10" />
                 <div class="flex flex-col"><span
                         class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight leading-none">Yakraz</span><span
-                        class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mt-1">AI-компаньон здоровья</span></div>
+                        class="font-label-caps text-label-caps text-secondary uppercase tracking-widest mt-1">AI-компаньон
+                        здоровья</span></div>
             </a>
+            <nav class="hidden lg:flex items-center gap-8 font-body-sm text-body-sm" aria-label="Основная навигация">
+                <a class="nav-link" data-path="overview" href="#overview">Обзор</a>
+                <a class="nav-link" data-path="med-ai" href="#med-ai">Med AI</a>
+                <a class="nav-link" data-path="features" href="#features">Возможности</a>
+                <a class="nav-link" data-path="compare" href="#compare">Сравнение</a>
+            </nav>
             <div class="flex items-center gap-4"><a
                     class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-primary-container text-on-primary font-headline-sm text-body-sm font-semibold tracking-wide hover:bg-primary transition-all duration-200 shadow-[0_4px_16px_-2px_rgba(13,59,130,0.3)] active:scale-[0.98]"
                     data-path="download-app" data-coming-soon href="#">Скачать</a>
@@ -114,10 +472,10 @@
             <!-- HERO SECTION -->
             <section id="download-app" class="relative w-full overflow-hidden pt-8 pb-20 lg:pt-14 lg:pb-32">
                 <!-- Ambient Radial Illumination -->
-                <div
+                <div data-parallax="0.05"
                     class="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[520px] bg-gradient-to-tr from-secondary/10 via-secondary-container/15 to-transparent blur-3xl rounded-full">
                 </div>
-                <div
+                <div data-parallax="-0.04"
                     class="pointer-events-none absolute -top-12 -left-20 w-80 h-80 bg-primary-fixed/20 rounded-full blur-2xl">
                 </div>
                 <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
@@ -125,14 +483,21 @@
                         <!-- Badge -->
                         <div
                             class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container shadow-sm mb-6">
-                            <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                            <span class="w-2 h-2 rounded-full bg-secondary pulse-ring"></span>
                             <span
-                                class="font-label-caps text-label-caps text-secondary uppercase tracking-wider font-semibold">Ваш персональный AI-компаньон здоровья</span>
+                                class="font-label-caps text-label-caps text-secondary uppercase tracking-wider font-semibold">Ваш
+                                персональный AI-компаньон здоровья</span>
                         </div>
                         <!-- Headline -->
-                        <h1 class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-primary font-extrabold tracking-tight mb-6">Познакомьтесь с Yakraz — AI-компаньоном, который понимает ваше здоровье, как никто другой.</h1>
+                        <h1
+                            class="font-headline-xl text-headline-xl-mobile lg:text-headline-xl text-primary font-extrabold tracking-tight mb-6">
+                            Познакомьтесь с Yakraz — AI-компаньоном, который понимает ваше здоровье, как никто другой.
+                        </h1>
                         <!-- Subheadline -->
-                        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed mb-9">Yakraz хранит ваши лекарства, записи и медицинские документы в одном элегантном месте — и даёт вам помощника, который управляет всем этим по вашей голосовой команде.</p>
+                        <p
+                            class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed mb-9">
+                            Yakraz хранит ваши лекарства, записи и медицинские документы в одном месте — и даёт вам
+                            помощника, который управляет всем этим по вашей команде.</p>
                         <!-- CTA Action Cluster -->
                         <div class="flex flex-wrap items-center justify-center gap-4 mb-8">
                             <a class="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-primary-container text-on-primary font-headline-sm text-body-md font-semibold hover:bg-primary shadow-lg transition-all transform active:scale-95"
@@ -146,7 +511,6 @@
                             class="inline-flex flex-wrap items-center justify-center gap-3 py-2 px-5 rounded-full bg-surface-container-low/70 text-on-surface-variant font-body-sm text-body-sm">
                             <span class="flex items-center gap-1.5 font-medium text-secondary">
                                 <span class="material-symbols-outlined text-[16px]">verified_user</span> Приватность
-                                по дизайну
                             </span>
                             <span class="hidden sm:inline text-outline-variant font-mono">•</span>
                             <span>Данные не используются для обучения AI-моделей</span>
@@ -155,15 +519,18 @@
                         </div>
                     </div>
                     <!-- Hero Interactive Mockup Showcase -->
-                    <div
-                        class="relative max-w-5xl mx-auto bg-surface-container-lowest rounded-2xl shadow-xl p-4 sm:p-7 backdrop-blur-md">
+                    <div id="heroMockup" data-tilt
+                        class="rise-in relative max-w-5xl mx-auto bg-surface-container-lowest rounded-2xl shadow-xl p-4 sm:p-7 backdrop-blur-md">
                         <!-- Top Device Header Bar -->
-                        <div class="flex items-center justify-between gap-3 pb-4 mb-5 border-b border-surface-container">
+                        <div
+                            class="flex items-center justify-between gap-3 pb-4 mb-5 border-b border-surface-container">
                             <div class="flex items-center gap-2 min-w-0">
                                 <span class="w-3 h-3 shrink-0 rounded-full bg-error/60"></span>
                                 <span class="w-3 h-3 shrink-0 rounded-full bg-secondary-fixed-dim"></span>
                                 <span class="w-3 h-3 shrink-0 rounded-full bg-secondary"></span>
-                                <span class="ml-2 truncate font-label-mono-sm text-label-mono-sm text-on-surface-variant">Yakraz Clinical Core • v2.4 (активная сессия)</span>
+                                <span
+                                    class="ml-2 truncate font-label-mono-sm text-label-mono-sm text-on-surface-variant">Yakraz
+                                    Clinical Core</span>
                             </div>
                             <div
                                 class="hidden sm:flex items-center gap-3 shrink-0 font-label-caps text-label-caps text-secondary font-semibold uppercase">
@@ -179,11 +546,15 @@
                             <div class="lg:col-span-5 flex flex-col gap-4 bg-surface-container-low/60 rounded-xl p-4">
                                 <div class="flex items-center justify-between">
                                     <div>
-                                        <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Фокус на сегодня</span>
-                                        <h3 class="font-headline-sm text-headline-sm text-primary font-bold">Доброе утро, Сара</h3>
+                                        <span
+                                            class="font-label-caps text-label-caps text-on-surface-variant uppercase">Фокус
+                                            на сегодня</span>
+                                        <h3 class="font-headline-sm text-headline-sm text-primary font-bold">Доброе
+                                            утро, Сара</h3>
                                     </div>
-                                    <span
-                                        class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps font-bold">85% готово</span>
+                                    <span data-counter="85"
+                                        class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps font-bold">85%
+                                        готово</span>
                                 </div>
                                 <!-- Adherence Meter -->
                                 <div
@@ -193,7 +564,7 @@
                                             <path class="text-surface-container-high stroke-current"
                                                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                                 fill="none" stroke-width="3.5"></path>
-                                            <path class="text-secondary stroke-current"
+                                            <path class="text-secondary stroke-current" data-ring="85"
                                                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                                 fill="none" stroke-dasharray="85, 100" stroke-linecap="round"
                                                 stroke-width="3.5"></path>
@@ -202,8 +573,10 @@
                                             class="absolute font-label-mono-sm text-label-mono-sm font-bold text-primary">3/4</span>
                                     </div>
                                     <div>
-                                        <p class="font-body-sm text-body-sm text-primary font-semibold">Утренние дозы подтверждены</p>
-                                        <p class="font-body-sm text-body-sm text-on-surface-variant">Осталась 1 доза сегодня в 20:00</p>
+                                        <p class="font-body-sm text-body-sm text-primary font-semibold">Утренние дозы
+                                            подтверждены</p>
+                                        <p class="font-body-sm text-body-sm text-on-surface-variant">Осталась 1 доза
+                                            сегодня в 20:00</p>
                                     </div>
                                 </div>
                                 <!-- Next Dose Card -->
@@ -212,15 +585,20 @@
                                         <div class="flex items-center gap-2">
                                             <span
                                                 class="material-symbols-outlined text-secondary text-[20px]">pill</span>
-                                            <span class="font-headline-sm text-body-sm font-semibold text-primary">Аторвастатин 20 мг</span>
+                                            <span
+                                                class="font-headline-sm text-body-sm font-semibold text-primary">Аторвастатин
+                                                20 мг</span>
                                         </div>
-                                        <span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant">20:00</span>
+                                        <span
+                                            class="font-label-mono-sm text-label-mono-sm text-on-surface-variant">20:00</span>
                                     </div>
                                     <div
                                         class="flex items-center justify-between pt-2 border-t border-surface-container">
-                                        <span class="font-body-sm text-body-sm text-on-surface-variant">1 таблетка • С ужином</span>
+                                        <span class="font-body-sm text-body-sm text-on-surface-variant">1 таблетка • С
+                                            ужином</span>
                                         <span
-                                            class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-mono-sm text-[11px]">По плану</span>
+                                            class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-mono-sm text-[11px]">По
+                                            плану</span>
                                     </div>
                                 </div>
                                 <!-- Upcoming Appointment Card -->
@@ -229,11 +607,14 @@
                                         <div class="flex items-center gap-2">
                                             <span
                                                 class="material-symbols-outlined text-primary-container text-[20px]">calendar_today</span>
-                                            <span class="font-headline-sm text-body-sm font-semibold text-primary">Приём у кардиолога</span>
+                                            <span class="font-headline-sm text-body-sm font-semibold text-primary">Приём
+                                                у кардиолога</span>
                                         </div>
-                                        <span class="font-label-caps text-label-caps text-secondary font-bold">Завтра</span>
+                                        <span
+                                            class="font-label-caps text-label-caps text-secondary font-bold">Завтра</span>
                                     </div>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant">Доктор Эвелин Вэнс • 10:30 (St. Jude Medical)</p>
+                                    <p class="font-body-sm text-body-sm text-on-surface-variant">Доктор Эвелин Вэнс •
+                                        10:30 (St. Jude Medical)</p>
                                     <div class="mt-2.5 flex items-center gap-2 text-primary font-body-sm text-body-sm">
                                         <span class="material-symbols-outlined text-[16px]">attach_file</span>
                                         <span class="font-medium">2 связанных документа</span>
@@ -241,7 +622,8 @@
                                 </div>
                             </div>
                             <!-- Right Column: Conversational Med AI Interactive Stream (7 Cols) -->
-                            <div class="lg:col-span-7 flex flex-col gap-3 bg-surface rounded-xl p-5 shadow-inner">
+                            <div id="heroChat"
+                                class="lg:col-span-7 flex flex-col gap-3 bg-surface rounded-xl p-5 shadow-inner">
                                 <div class="flex items-center justify-between pb-3 border-b border-surface-container">
                                     <div class="flex items-center gap-2.5">
                                         <div
@@ -249,8 +631,11 @@
                                             <span class="material-symbols-outlined text-[18px]">neurology</span>
                                         </div>
                                         <div>
-                                            <h4 class="font-headline-sm text-body-sm font-bold text-primary leading-tight">Ассистент Med AI</h4>
-                                            <p class="font-label-mono-sm text-[11px] text-secondary">Интеллектуальный разбор намерений</p>
+                                            <h4
+                                                class="font-headline-sm text-body-sm font-bold text-primary leading-tight">
+                                                Ассистент Med AI</h4>
+                                            <p class="font-label-mono-sm text-[11px] text-secondary">Интеллектуальный
+                                                разбор намерений</p>
                                         </div>
                                     </div>
                                 </div>
@@ -258,9 +643,12 @@
                                 <div class="flex items-start justify-end gap-2.5 my-1">
                                     <div
                                         class="bg-primary-container text-on-primary rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-[85%] sm:max-w-md shadow-sm">
-                                        <p class="font-body-md text-body-md text-on-primary">«Добавьте ибупрофен 400 мг два раза в день, с едой, начиная с завтрашнего дня.»</p>
+                                        <p class="font-body-md text-body-md text-on-primary">«Добавьте ибупрофен 400 мг
+                                            два раза в день, с едой, начиная с завтрашнего дня.»</p>
                                     </div>
-                                    <div class="w-7 h-7 shrink-0 rounded-full bg-surface-container flex items-center justify-center text-primary text-xs font-bold mt-1">Вы</div>
+                                    <div
+                                        class="w-7 h-7 shrink-0 rounded-full bg-surface-container flex items-center justify-center text-primary text-xs font-bold mt-1">
+                                        Вы</div>
                                 </div>
                                 <!-- Med AI Response & Structured Action Card -->
                                 <div class="flex items-start gap-2.5 my-1">
@@ -271,7 +659,8 @@
                                     <div class="flex flex-col gap-2 max-w-full sm:max-w-lg min-w-0">
                                         <div
                                             class="bg-surface-container-lowest text-on-surface rounded-2xl rounded-tl-sm p-4 shadow-sm">
-                                            <p class="font-body-md text-body-md text-primary font-medium mb-3">Готово! Вот ваш обновлённый график приёма лекарств:</p>
+                                            <p class="font-body-md text-body-md text-primary font-medium mb-3">Готово!
+                                                Вот ваш обновлённый график приёма лекарств:</p>
                                             <!-- Executed Tool Card -->
                                             <div class="bg-surface-container-low rounded-xl p-3.5 shadow-sm">
                                                 <div class="flex items-center justify-between mb-2">
@@ -282,10 +671,12 @@
                                                                 class="material-symbols-outlined text-[14px]">medication</span>
                                                         </span>
                                                         <span
-                                                            class="font-headline-sm text-body-sm text-primary font-bold">Ибупрофен • 400 мг</span>
+                                                            class="font-headline-sm text-body-sm text-primary font-bold">Ибупрофен
+                                                            • 400 мг</span>
                                                     </div>
                                                     <span
-                                                        class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-caps text-[10px] font-bold uppercase">По плану</span>
+                                                        class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-caps text-[10px] font-bold uppercase">По
+                                                        плану</span>
                                                 </div>
                                                 <div
                                                     class="grid grid-cols-2 gap-2 text-on-surface-variant font-body-sm text-body-sm my-2">
@@ -307,11 +698,14 @@
                                         </div>
                                         <div class="flex flex-wrap items-center gap-2 pl-0 sm:pl-2">
                                             <span
-                                                class="font-label-caps text-[10px] text-outline uppercase font-semibold">Рекомендуемое действие:</span>
+                                                class="font-label-caps text-[10px] text-outline uppercase font-semibold">Рекомендуемое
+                                                действие:</span>
                                             <button
-                                                class="px-3 py-1 rounded-full bg-surface-container-lowest text-primary font-body-sm text-xs hover:bg-surface-container shadow-sm">Проверить возможные взаимодействия</button>
+                                                class="px-3 py-1 rounded-full bg-surface-container-lowest text-primary font-body-sm text-xs hover:bg-surface-container shadow-sm">Проверить
+                                                возможные взаимодействия</button>
                                             <button
-                                                class="px-3 py-1 rounded-full bg-surface-container-lowest text-primary font-body-sm text-xs hover:bg-surface-container shadow-sm">Лимит 14 дней</button>
+                                                class="px-3 py-1 rounded-full bg-surface-container-lowest text-primary font-body-sm text-xs hover:bg-surface-container shadow-sm">Лимит
+                                                14 дней</button>
                                         </div>
                                     </div>
                                 </div>
@@ -326,9 +720,13 @@
                     <!-- Section Header -->
                     <div class="max-w-3xl mb-16">
                         <span
-                            class="font-label-caps text-label-caps text-secondary uppercase tracking-widest font-bold block mb-3">Новый подход к заботе</span>
-                        <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight mb-5">Что такое Yakraz?</h2>
-                        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Yakraz — это не просто очередное приложение-напоминание. Это умный и приватный компаньон здоровья, который действительно понимает вашу жизнь и берёт на себя всю тяжёлую работу.</p>
+                            class="font-label-caps text-label-caps text-secondary uppercase tracking-widest font-bold block mb-3">Новый
+                            подход к заботе</span>
+                        <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight mb-5">
+                            Что такое Yakraz?</h2>
+                        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Yakraz — это не
+                            просто очередное приложение-напоминание. Это умный и приватный компаньон здоровья, который
+                            действительно понимает вашу жизнь и берёт на себя всю тяжёлую работу.</p>
                     </div>
                     <!-- Distinctive Dual Concept Modules -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -340,8 +738,12 @@
                                     class="w-14 h-14 rounded-2xl bg-primary-container text-secondary-container flex items-center justify-center mb-6 shadow-md">
                                     <span class="material-symbols-outlined text-[28px]">speed</span>
                                 </div>
-                                <h3 class="font-headline-md text-headline-md text-primary font-bold mb-4">С момента открытия</h3>
-                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Панель приветствует вас всем, что важно сегодня: дозы, которые ещё нужно принять, следующая запись, активные наблюдения и ваше самочувствие. Никакого поиска по меню или запутанных календарей.</p>
+                                <h3 class="font-headline-md text-headline-md text-primary font-bold mb-4">С момента
+                                    открытия</h3>
+                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Панель
+                                    приветствует вас всем, что важно сегодня: дозы, которые ещё нужно принять, следующая
+                                    запись, активные наблюдения и ваше самочувствие. Никакого поиска по меню или
+                                    запутанных календарей.</p>
                             </div>
                             <!-- Visual Artifact: Today's Triage Summary -->
                             <div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col gap-3">
@@ -354,12 +756,14 @@
                                     <div class="p-2.5 rounded-lg bg-surface-container">
                                         <span
                                             class="font-headline-sm text-headline-sm text-primary font-bold block">3</span>
-                                        <span class="font-body-sm text-[12px] text-on-surface-variant">Ожидающие дозы</span>
+                                        <span class="font-body-sm text-[12px] text-on-surface-variant">Ожидающие
+                                            дозы</span>
                                     </div>
                                     <div class="p-2.5 rounded-lg bg-surface-container">
                                         <span
                                             class="font-headline-sm text-headline-sm text-secondary font-bold block">1</span>
-                                        <span class="font-body-sm text-[12px] text-on-surface-variant">Проверка сегодня</span>
+                                        <span class="font-body-sm text-[12px] text-on-surface-variant">Проверка
+                                            сегодня</span>
                                     </div>
                                     <div class="p-2.5 rounded-lg bg-surface-container">
                                         <span
@@ -377,8 +781,12 @@
                                     class="w-14 h-14 rounded-2xl bg-secondary text-on-secondary flex items-center justify-center mb-6 shadow-md">
                                     <span class="material-symbols-outlined text-[28px]">psychology_alt</span>
                                 </div>
-                                <h3 class="font-headline-md text-headline-md text-primary font-bold mb-4">Работа с вашими реальными данными</h3>
-                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Это не обычная поисковая система и не шаблонный чат-бот — Med AI общается простым языком и работает с вашим реальным режимом лечения, календарём и медицинскими записями. Он даёт рекомендации с учётом того, кто вы на самом деле.</p>
+                                <h3 class="font-headline-md text-headline-md text-primary font-bold mb-4">Работа с
+                                    вашими реальными данными</h3>
+                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Это не
+                                    обычная поисковая система и не шаблонный чат-бот — Med AI общается простым языком и
+                                    работает с вашим реальным режимом лечения, календарём и медицинскими записями. Он
+                                    даёт рекомендации с учётом того, кто вы на самом деле.</p>
                             </div>
                             <!-- Visual Artifact: Direct Schema Link -->
                             <div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm">
@@ -386,8 +794,10 @@
                                     <span
                                         class="material-symbols-outlined text-secondary text-[24px]">dataset_linked</span>
                                     <div>
-                                        <p class="font-body-sm text-body-sm font-bold text-primary">Единое ядро данных</p>
-                                        <p class="font-body-sm text-xs text-on-surface-variant">Лекарства • Анализы • График врачей • Журнал симптомов</p>
+                                        <p class="font-body-sm text-body-sm font-bold text-primary">Единое ядро данных
+                                        </p>
+                                        <p class="font-body-sm text-xs text-on-surface-variant">Лекарства • Анализы •
+                                            График врачей • Журнал симптомов</p>
                                     </div>
                                 </div>
                             </div>
@@ -401,18 +811,27 @@
                     <!-- Section Title -->
                     <div class="text-center max-w-3xl mx-auto mb-16">
                         <span
-                            class="font-label-caps text-label-caps text-secondary uppercase tracking-widest font-bold block mb-2">Клинический машинный интеллект</span>
-                        <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight mb-4">Возможности Med AI</h2>
-                        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Представьте: вы задаёте вопрос своему приложению о здоровье и получаете понятный полезный ответ — а не статичную выдачу. Это Med AI.</p>
+                            class="font-label-caps text-label-caps text-secondary uppercase tracking-widest font-bold block mb-2">Клинический
+                            машинный интеллект</span>
+                        <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight mb-4">
+                            Возможности Med AI</h2>
+                        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Представьте: вы
+                            задаёте вопрос своему приложению о здоровье и получаете понятный полезный ответ — а не
+                            статичную выдачу. Это Med AI.</p>
                     </div>
                     <!-- Voice Interaction Feature Banner -->
                     <div
                         class="bg-gradient-to-r from-primary to-primary-container rounded-2xl p-8 lg:p-12 text-on-primary mb-16 shadow-xl relative overflow-hidden">
                         <div class="relative z-10 max-w-2xl">
                             <span
-                                class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps uppercase font-bold tracking-wider mb-4 inline-block">Технология «от голоса к действию»</span>
-                            <h3 class="font-headline-md text-headline-md font-bold mb-4 text-on-primary">Говорите естественно — оно действует.</h3>
-                            <p class="font-body-lg text-body-lg text-inverse-on-surface leading-relaxed mb-6">Замените утомительное многошаговое заполнение форм голосовыми командами. Просто скажите, что порекомендовал врач, и Med AI мгновенно распознает время приёма, инструкции и связь с едой.</p>
+                                class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps uppercase font-bold tracking-wider mb-4 inline-block">Технология
+                                «от голоса к действию»</span>
+                            <h3 class="font-headline-md text-headline-md font-bold mb-4 text-on-primary">Говорите
+                                естественно — оно действует.</h3>
+                            <p class="font-body-lg text-body-lg text-inverse-on-surface leading-relaxed mb-6">Замените
+                                утомительное многошаговое заполнение форм голосовыми командами. Просто скажите, что
+                                порекомендовал врач, и Med AI мгновенно распознает время приёма, инструкции и связь с
+                                едой.</p>
                             <!-- Interactive Speech Snippet -->
                             <div
                                 class="bg-surface-container-lowest/15 backdrop-blur-md rounded-xl p-4 flex items-center gap-4">
@@ -421,8 +840,11 @@
                                     <span class="material-symbols-outlined text-[20px]">mic</span>
                                 </div>
                                 <div class="flex flex-col">
-                                    <span class="font-label-mono-sm text-xs text-secondary-fixed">Ввод голосовой записи</span>
-                                    <span class="font-body-md text-body-md font-medium text-on-primary italic">«Добавьте ибупрофен 400 мг два раза в день, с едой, начиная с завтрашнего дня.»</span>
+                                    <span class="font-label-mono-sm text-xs text-secondary-fixed">Ввод голосовой
+                                        записи</span>
+                                    <span class="font-body-md text-body-md font-medium text-on-primary italic"
+                                        data-typewriter>«Добавьте
+                                        ибупрофен 400 мг два раза в день, с едой, начиная с завтрашнего дня.»</span>
                                 </div>
                             </div>
                         </div>
@@ -441,10 +863,14 @@
                                     class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-4">
                                     <span class="material-symbols-outlined text-[22px]">medication</span>
                                 </div>
-                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Следите за лекарствами</h4>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Каждое лекарство, которое вы отслеживаете, с дозировкой, графиком и статусом соблюдения — всё в одном взгляде.</p>
+                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Следите за
+                                    лекарствами</h4>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Каждое
+                                    лекарство, которое вы отслеживаете, с дозировкой, графиком и статусом соблюдения —
+                                    всё в одном взгляде.</p>
                             </div>
-                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Активный контроль приёма</span>
+                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Активный контроль
+                                приёма</span>
                         </div>
                         <!-- Capability 2 -->
                         <div
@@ -454,10 +880,14 @@
                                     class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-4">
                                     <span class="material-symbols-outlined text-[22px]">event_available</span>
                                 </div>
-                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Знайте свои приёмы у врача</h4>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Предстоящие, просроченные, завершённые или отменённые — у Med AI всегда есть полная хронологическая картина.</p>
+                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Знайте свои приёмы
+                                    у врача</h4>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                                    Предстоящие, просроченные, завершённые или отменённые — у Med AI всегда есть полная
+                                    хронологическая картина.</p>
                             </div>
-                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Синхронизация с календарём</span>
+                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Синхронизация с
+                                календарём</span>
                         </div>
                         <!-- Capability 3 -->
                         <div
@@ -467,10 +897,14 @@
                                     class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-4">
                                     <span class="material-symbols-outlined text-[22px]">record_voice_over</span>
                                 </div>
-                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Создавайте лекарства голосом</h4>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Опишите таблетку, капсулу, жидкость или ингалятор — и оно будет запланировано мгновенно с нужными интервалами.</p>
+                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Создавайте
+                                    лекарства голосом</h4>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Опишите
+                                    таблетку, капсулу, жидкость или ингалятор — и оно будет запланировано мгновенно с
+                                    нужными интервалами.</p>
                             </div>
-                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Ядро распознавания речи</span>
+                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Ядро
+                                распознавания речи</span>
                         </div>
                         <!-- Capability 4 -->
                         <div
@@ -480,10 +914,14 @@
                                     class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-4">
                                     <span class="material-symbols-outlined text-[22px]">book_online</span>
                                 </div>
-                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Записывайтесь на приём</h4>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Назовите врача, время и клинические заметки — и оно создаст запись в календаре с умными напоминаниями.</p>
+                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Записывайтесь на
+                                    приём</h4>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Назовите
+                                    врача, время и клинические заметки — и оно создаст запись в календаре с умными
+                                    напоминаниями.</p>
                             </div>
-                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Автоматические смещения</span>
+                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Автоматические
+                                смещения</span>
                         </div>
                         <!-- Capability 5 -->
                         <div
@@ -493,10 +931,14 @@
                                     class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-4">
                                     <span class="material-symbols-outlined text-[22px]">update</span>
                                 </div>
-                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Настраивайте контрольные проверки</h4>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">«Напомни мне через 6 месяцев записаться на осмотр» — Yakraz запомнит и напомнит точно в срок.</p>
+                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Настраивайте
+                                    контрольные проверки</h4>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">«Напомни
+                                    мне через 6 месяцев записаться на осмотр» — Yakraz запомнит и напомнит точно в срок.
+                                </p>
                             </div>
-                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Долговременная память</span>
+                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Долговременная
+                                память</span>
                         </div>
                         <!-- Capability 6 -->
                         <div
@@ -506,10 +948,14 @@
                                     class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-4">
                                     <span class="material-symbols-outlined text-[22px]">query_stats</span>
                                 </div>
-                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Понимайте закономерности</h4>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Спросите: «Как я себя чувствовал в последнее время?» — чтобы проанализировать историю настроения и симптомов и выявить связи с лекарствами.</p>
+                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Понимайте
+                                    закономерности</h4>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Спросите:
+                                    «Как я себя чувствовал в последнее время?» — чтобы проанализировать историю
+                                    настроения и симптомов и выявить связи с лекарствами.</p>
                             </div>
-                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Биометрическая корреляция</span>
+                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Биометрическая
+                                корреляция</span>
                         </div>
                         <!-- Capability 7 -->
                         <div
@@ -519,10 +965,13 @@
                                     class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-4">
                                     <span class="material-symbols-outlined text-[22px]">picture_as_pdf</span>
                                 </div>
-                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Экспортируйте отчёты</h4>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Превращает данные о здоровье в аккуратные PDF-отчёты, готовые к печати или передаче врачу.</p>
+                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Экспортируйте
+                                    отчёты</h4>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Превращает
+                                    данные о здоровье в аккуратные PDF-отчёты, готовые к печати или передаче врачу.</p>
                             </div>
-                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Экспорт для врача</span>
+                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Экспорт для
+                                врача</span>
                         </div>
                         <!-- Capability 8 -->
                         <div
@@ -532,10 +981,14 @@
                                     class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-4">
                                     <span class="material-symbols-outlined text-[22px]">touch_app</span>
                                 </div>
-                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Непрерывные карточки</h4>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Непрерывный контекст диалога в сочетании с интерактивными UI-карточками — нажмите, чтобы сразу перейти к деталям.</p>
+                                <h4 class="font-headline-sm text-body-lg font-bold text-primary mb-2">Непрерывные
+                                    карточки</h4>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Непрерывный
+                                    контекст диалога в сочетании с интерактивными UI-карточками — нажмите, чтобы сразу
+                                    перейти к деталям.</p>
                             </div>
-                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Нативная навигация</span>
+                            <span class="mt-4 font-label-mono-sm text-xs text-secondary font-semibold">Нативная
+                                навигация</span>
                         </div>
                     </div>
                 </div>
@@ -546,9 +999,13 @@
                     <!-- Section Header -->
                     <div class="max-w-2xl mb-16">
                         <span
-                            class="font-label-caps text-label-caps text-secondary uppercase tracking-widest font-bold block mb-2">Реальная польза</span>
-                        <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight mb-4">Почему люди любят Yakraz</h2>
-                        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Создано с бескомпромиссной точностью, чтобы устранить «клиническую тройку» и сделать ежедневное управление здоровьем простым.</p>
+                            class="font-label-caps text-label-caps text-secondary uppercase tracking-widest font-bold block mb-2">Реальная
+                            польза</span>
+                        <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight mb-4">
+                            Почему люди любят Yakraz</h2>
+                        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Создано с
+                            бескомпромиссной точностью, чтобы устранить сделать ежедневное
+                            управление здоровьем простым.</p>
                     </div>
                     <!-- Bento Grid Architecture -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -560,8 +1017,12 @@
                                     class="w-12 h-12 rounded-xl bg-secondary-container text-on-secondary-container flex items-center justify-center mb-5">
                                     <span class="material-symbols-outlined text-[24px]">pill</span>
                                 </div>
-                                <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-3">Не упускайте свои лекарства</h3>
-                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Полный менеджер лекарств для сложных реальных схем: несколько доз в день, настраиваемые дни недели, пауза курса одним касанием и отметки «Принято», «Отложить» или «Пропустить» прямо из уведомлений на экране блокировки.</p>
+                                <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-3">Не упускайте
+                                    свои лекарства</h3>
+                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Полный
+                                    менеджер лекарств для сложных реальных схем: несколько доз в день, настраиваемые дни
+                                    недели, пауза курса одним касанием и отметки «Принято», «Отложить» или «Пропустить»
+                                    прямо из уведомлений на экране блокировки.</p>
                             </div>
                             <div
                                 class="flex items-center gap-2 p-3 bg-surface-container rounded-lg text-xs font-mono text-primary font-medium">
@@ -577,8 +1038,11 @@
                                     class="w-12 h-12 rounded-xl bg-primary-container text-secondary-container flex items-center justify-center mb-5">
                                     <span class="material-symbols-outlined text-[24px]">notifications_active</span>
                                 </div>
-                                <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-3">Никогда не пропустите приём</h3>
-                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Умные напоминания с запасом времени: за 1 день и за 2 часа до визита. Напоминания о контрольной проверке можно превратить в запись к врачу одним касанием.</p>
+                                <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-3">Никогда не
+                                    пропустите приём</h3>
+                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Умные
+                                    напоминания с запасом времени: за 1 день и за 2 часа до визита. Напоминания о
+                                    контрольной проверке можно превратить в запись к врачу одним касанием.</p>
                             </div>
                             <div
                                 class="flex items-center gap-2 p-3 bg-surface-container rounded-lg text-xs font-mono text-primary font-medium">
@@ -594,8 +1058,12 @@
                                     class="w-12 h-12 rounded-xl bg-surface-container text-primary flex items-center justify-center mb-5">
                                     <span class="material-symbols-outlined text-[24px]">folder_special</span>
                                 </div>
-                                <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-3">Все документы в одном хранилище</h3>
-                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Импортируйте клинические PDF и снимки из приложений «Файлы» или «Фото». Мгновенные предпросмотры QuickLook, упорядоченные папки пациентов и прямая привязка анализов к записям (например, МРТ — к визиту кардиолога).</p>
+                                <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-3">Все документы
+                                    в одном хранилище</h3>
+                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">
+                                    Импортируйте клинические PDF и снимки из приложений «Файлы» или «Фото». Мгновенные
+                                    предпросмотры QuickLook, упорядоченные папки пациентов и прямая привязка анализов к
+                                    записям (например, МРТ — к визиту кардиолога).</p>
                             </div>
                             <div
                                 class="flex items-center gap-2 p-3 bg-surface-container rounded-lg text-xs font-mono text-primary font-medium">
@@ -611,8 +1079,12 @@
                                     class="w-12 h-12 rounded-xl bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center mb-5">
                                     <span class="material-symbols-outlined text-[24px]">mood</span>
                                 </div>
-                                <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-3">Отмечайте своё самочувствие</h3>
-                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Заносите ежедневное настроение и физические симптомы меньше чем за пять секунд. Yakraz соотносит вашу энергию и побочные эффекты с изменениями дозировок и автоматически находит закономерности.</p>
+                                <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-3">Отмечайте своё
+                                    самочувствие</h3>
+                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">
+                                    Заносите ежедневное настроение и физические симптомы меньше чем за пять секунд.
+                                    Yakraz соотносит вашу энергию и побочные эффекты с изменениями дозировок и
+                                    автоматически находит закономерности.</p>
                             </div>
                             <div
                                 class="flex items-center gap-2 p-3 bg-surface-container rounded-lg text-xs font-mono text-primary font-medium">
@@ -628,21 +1100,32 @@
                                     class="w-12 h-12 rounded-xl bg-primary text-on-primary flex items-center justify-center mb-5">
                                     <span class="material-symbols-outlined text-[24px]">touch_app</span>
                                 </div>
-                                <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-3">Для ежедневного использования</h3>
-                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">Красивая, без лишнего хаоса панель, созданная для чистого тактильного комфорта. Быстрый отклик, свайпы для выполнения или удаления с мгновенной отменой и автоматически обновляемые ленты, которые не дают потерять ориентацию.</p>
+                                <h3 class="font-headline-sm text-headline-sm text-primary font-bold mb-3">Для
+                                    ежедневного использования</h3>
+                                <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6">
+                                    Красивая, без лишнего хаоса панель, созданная для чистого тактильного комфорта.
+                                    Быстрый отклик, свайпы для выполнения или удаления с мгновенной отменой и
+                                    автоматически обновляемые ленты, которые не дают потерять ориентацию.</p>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-surface-container">
                                 <div>
-                                    <span class="font-label-caps text-label-caps text-secondary uppercase font-semibold">Скорость жестов</span>
+                                    <span
+                                        class="font-label-caps text-label-caps text-secondary uppercase font-semibold">Скорость
+                                        жестов</span>
                                     <p class="font-headline-sm text-body-md font-bold text-primary">Без задержки</p>
                                 </div>
                                 <div>
-                                    <span class="font-label-caps text-label-caps text-secondary uppercase font-semibold">Отмена действия</span>
-                                    <p class="font-headline-sm text-body-md font-bold text-primary">Быстрое восстановление</p>
+                                    <span
+                                        class="font-label-caps text-label-caps text-secondary uppercase font-semibold">Отмена
+                                        действия</span>
+                                    <p class="font-headline-sm text-body-md font-bold text-primary">Быстрое
+                                        восстановление</p>
                                 </div>
                                 <div>
-                                    <span class="font-label-caps text-label-caps text-secondary uppercase font-semibold">Синхронизация</span>
-                                    <p class="font-headline-sm text-body-md font-bold text-primary">Автоматическая живая лента</p>
+                                    <span
+                                        class="font-label-caps text-label-caps text-secondary uppercase font-semibold">Синхронизация</span>
+                                    <p class="font-headline-sm text-body-md font-bold text-primary">Автоматическая живая
+                                        лента</p>
                                 </div>
                             </div>
                         </div>
@@ -650,89 +1133,141 @@
                 </div>
             </section>
             <!-- SECTION 5: "FEATURE HIGHLIGHTS" COMPARISON / MATRIX TABLE -->
-            <section id="compare"
-                class="w-full bg-surface-container-lowest py-20 lg:py-28 scroll-mt-20">
+            <section id="compare" class="w-full bg-surface-container-lowest py-20 lg:py-28 scroll-mt-20">
                 <div class="max-w-7xl mx-auto px-6 lg:px-12">
                     <div class="text-center max-w-3xl mx-auto mb-16">
                         <span
-                            class="font-label-caps text-label-caps text-secondary uppercase tracking-widest font-bold block mb-2">Матрица возможностей системы</span>
-                        <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight mb-4">Ключевые возможности</h2>
-                        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Сравните опыт Yakraz с устаревшими приложениями-напоминаниями и обычными облачными чат-ботами.</p>
+                            class="font-label-caps text-label-caps text-secondary uppercase tracking-widest font-bold block mb-2">Матрица
+                            возможностей системы</span>
+                        <h2 class="font-headline-lg text-headline-lg text-primary font-extrabold tracking-tight mb-4">
+                            Ключевые возможности</h2>
+                        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">Сравните опыт
+                            Yakraz с устаревшими приложениями-напоминаниями и обычными облачными чат-ботами.</p>
                     </div>
                     <!-- Interactive Desktop Comparison Table -->
                     <div class="md:overflow-x-auto md:rounded-2xl md:shadow-sm">
                         <table class="w-full text-left border-collapse bg-surface-container-low">
                             <thead class="max-md:hidden">
                                 <tr class="border-b border-surface-container-high bg-surface-container">
-                                    <th class="py-4 px-6 font-headline-sm text-body-sm font-bold text-primary">Базовая возможность</th>
-                                    <th class="py-4 px-6 font-headline-sm text-body-sm font-bold text-secondary">Yakraz + Med AI</th>
-                                    <th class="py-4 px-6 font-headline-sm text-body-sm font-semibold text-on-surface-variant">Обычные напоминания</th>
-                                    <th class="py-4 px-6 font-headline-sm text-body-sm font-semibold text-on-surface-variant">Облачные AI-чат-боты</th>
+                                    <th class="py-4 px-6 font-headline-sm text-body-sm font-bold text-primary">Базовая
+                                        возможность</th>
+                                    <th class="py-4 px-6 font-headline-sm text-body-sm font-bold text-secondary">Yakraz
+                                        + Med AI</th>
+                                    <th
+                                        class="py-4 px-6 font-headline-sm text-body-sm font-semibold text-on-surface-variant">
+                                        Обычные напоминания</th>
+                                    <th
+                                        class="py-4 px-6 font-headline-sm text-body-sm font-semibold text-on-surface-variant">
+                                        Облачные AI-чат-боты</th>
                                 </tr>
                             </thead>
-                            <tbody class="md:divide-y divide-surface-container font-body-sm text-body-sm text-on-surface">
+                            <tbody
+                                class="md:divide-y divide-surface-container font-body-sm text-body-sm text-on-surface">
                                 <!-- Row 1 -->
-                                <tr class="hover:bg-surface transition-colors max-md:block max-md:mb-4 max-md:rounded-xl max-md:bg-surface-container-lowest max-md:shadow-sm max-md:p-2">
-                                    <td class="py-4 px-6 font-semibold text-primary max-md:block max-md:py-3 max-md:px-4">
+                                <tr
+                                    class="hover:bg-surface transition-colors max-md:block max-md:mb-4 max-md:rounded-xl max-md:bg-surface-container-lowest max-md:shadow-sm max-md:p-2">
+                                    <td
+                                        class="py-4 px-6 font-semibold text-primary max-md:block max-md:py-3 max-md:px-4">
                                         Голосовой ассистент Med AI
-                                        <span class="block font-normal text-xs text-on-surface-variant">Создание расписания текстом или голосом</span>
+                                        <span class="block font-normal text-xs text-on-surface-variant">Создание
+                                            расписания текстом или голосом</span>
                                     </td>
-                                    <td data-label="Yakraz + Med AI" class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5 max-md:py-3 max-md:px-4 max-md:justify-between max-md:text-right max-md:before:content-[attr(data-label)] max-md:before:font-normal max-md:before:text-outline">
-                                        <span class="material-symbols-outlined text-[18px]">check_circle</span> Да, полное выполнение
+                                    <td data-label="Yakraz + Med AI"
+                                        class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5 max-md:py-3 max-md:px-4 max-md:justify-between max-md:text-right max-md:before:content-[attr(data-label)] max-md:before:font-normal max-md:before:text-outline">
+                                        <span class="material-symbols-outlined text-[18px]">check_circle</span> Да,
+                                        полное выполнение
                                     </td>
-                                    <td data-label="Обычные напоминания" class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">Нет (только ручной ввод)</td>
-                                    <td data-label="Облачные AI-чат-боты" class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">Только ответы, без действий в приложении</td>
+                                    <td data-label="Обычные напоминания"
+                                        class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">
+                                        Нет (только ручной ввод)</td>
+                                    <td data-label="Облачные AI-чат-боты"
+                                        class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">
+                                        Только ответы, без действий в приложении</td>
                                 </tr>
                                 <!-- Row 2 -->
-                                <tr class="hover:bg-surface transition-colors max-md:block max-md:mb-4 max-md:rounded-xl max-md:bg-surface-container-lowest max-md:shadow-sm max-md:p-2">
-                                    <td class="py-4 px-6 font-semibold text-primary max-md:block max-md:py-3 max-md:px-4">
+                                <tr
+                                    class="hover:bg-surface transition-colors max-md:block max-md:mb-4 max-md:rounded-xl max-md:bg-surface-container-lowest max-md:shadow-sm max-md:p-2">
+                                    <td
+                                        class="py-4 px-6 font-semibold text-primary max-md:block max-md:py-3 max-md:px-4">
                                         Планирование приёма лекарств
-                                        <span class="block font-normal text-xs text-on-surface-variant">Несколько доз, настроенные дни недели, паузы курсов</span>
+                                        <span class="block font-normal text-xs text-on-surface-variant">Несколько доз,
+                                            настроенные дни недели, паузы курсов</span>
                                     </td>
-                                    <td data-label="Yakraz + Med AI" class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5 max-md:py-3 max-md:px-4 max-md:justify-between max-md:text-right max-md:before:content-[attr(data-label)] max-md:before:font-normal max-md:before:text-outline">
+                                    <td data-label="Yakraz + Med AI"
+                                        class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5 max-md:py-3 max-md:px-4 max-md:justify-between max-md:text-right max-md:before:content-[attr(data-label)] max-md:before:font-normal max-md:before:text-outline">
                                         <span class="material-symbols-outlined text-[18px]">check_circle</span>
                                         Без ограничений и гибко
                                     </td>
-                                    <td data-label="Обычные напоминания" class="py-4 px-6 text-on-surface-variant max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">Простые одиночные таймеры</td>
-                                    <td data-label="Облачные AI-чат-боты" class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">Нет поддержки</td>
+                                    <td data-label="Обычные напоминания"
+                                        class="py-4 px-6 text-on-surface-variant max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">
+                                        Простые одиночные таймеры</td>
+                                    <td data-label="Облачные AI-чат-боты"
+                                        class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">
+                                        Нет поддержки</td>
                                 </tr>
                                 <!-- Row 3 -->
-                                <tr class="hover:bg-surface transition-colors max-md:block max-md:mb-4 max-md:rounded-xl max-md:bg-surface-container-lowest max-md:shadow-sm max-md:p-2">
-                                    <td class="py-4 px-6 font-semibold text-primary max-md:block max-md:py-3 max-md:px-4">
+                                <tr
+                                    class="hover:bg-surface transition-colors max-md:block max-md:mb-4 max-md:rounded-xl max-md:bg-surface-container-lowest max-md:shadow-sm max-md:p-2">
+                                    <td
+                                        class="py-4 px-6 font-semibold text-primary max-md:block max-md:py-3 max-md:px-4">
                                         Интерактивные умные напоминания
-                                        <span class="block font-normal text-xs text-on-surface-variant">«Принято» / «Отложить» / «Пропустить» с экрана</span>
+                                        <span class="block font-normal text-xs text-on-surface-variant">«Принято» /
+                                            «Отложить» / «Пропустить» с экрана</span>
                                     </td>
-                                    <td data-label="Yakraz + Med AI" class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5 max-md:py-3 max-md:px-4 max-md:justify-between max-md:text-right max-md:before:content-[attr(data-label)] max-md:before:font-normal max-md:before:text-outline">
-                                        <span class="material-symbols-outlined text-[18px]">check_circle</span> Мгновенные действия с экрана блокировки
+                                    <td data-label="Yakraz + Med AI"
+                                        class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5 max-md:py-3 max-md:px-4 max-md:justify-between max-md:text-right max-md:before:content-[attr(data-label)] max-md:before:font-normal max-md:before:text-outline">
+                                        <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                                        Мгновенные действия с экрана блокировки
                                     </td>
-                                    <td data-label="Обычные напоминания" class="py-4 px-6 text-on-surface-variant max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">Простое уведомление</td>
-                                    <td data-label="Облачные AI-чат-боты" class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">Нет системных уведомлений</td>
+                                    <td data-label="Обычные напоминания"
+                                        class="py-4 px-6 text-on-surface-variant max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">
+                                        Простое уведомление</td>
+                                    <td data-label="Облачные AI-чат-боты"
+                                        class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">
+                                        Нет системных уведомлений</td>
                                 </tr>
                                 <!-- Row 4 -->
-                                <tr class="hover:bg-surface transition-colors max-md:block max-md:mb-4 max-md:rounded-xl max-md:bg-surface-container-lowest max-md:shadow-sm max-md:p-2">
-                                    <td class="py-4 px-6 font-semibold text-primary max-md:block max-md:py-3 max-md:px-4">
+                                <tr
+                                    class="hover:bg-surface transition-colors max-md:block max-md:mb-4 max-md:rounded-xl max-md:bg-surface-container-lowest max-md:shadow-sm max-md:p-2">
+                                    <td
+                                        class="py-4 px-6 font-semibold text-primary max-md:block max-md:py-3 max-md:px-4">
                                         Хранилище медицинских документов
-                                        <span class="block font-normal text-xs text-on-surface-variant">Прямая привязка анализов и МРТ к записям</span>
+                                        <span class="block font-normal text-xs text-on-surface-variant">Прямая привязка
+                                            анализов и МРТ к записям</span>
                                     </td>
-                                    <td data-label="Yakraz + Med AI" class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5 max-md:py-3 max-md:px-4 max-md:justify-between max-md:text-right max-md:before:content-[attr(data-label)] max-md:before:font-normal max-md:before:text-outline">
+                                    <td data-label="Yakraz + Med AI"
+                                        class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5 max-md:py-3 max-md:px-4 max-md:justify-between max-md:text-right max-md:before:content-[attr(data-label)] max-md:before:font-normal max-md:before:text-outline">
                                         <span class="material-symbols-outlined text-[18px]">check_circle</span>
                                         Быстрый просмотр и связь с записями
                                     </td>
-                                    <td data-label="Обычные напоминания" class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">Нет хранения документов</td>
-                                    <td data-label="Облачные AI-чат-боты" class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">Требуется загрузка в публичное облако</td>
+                                    <td data-label="Обычные напоминания"
+                                        class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">
+                                        Нет хранения документов</td>
+                                    <td data-label="Облачные AI-чат-боты"
+                                        class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">
+                                        Требуется загрузка в публичное облако</td>
                                 </tr>
                                 <!-- Row 5 -->
-                                <tr class="hover:bg-surface transition-colors max-md:block max-md:mb-4 max-md:rounded-xl max-md:bg-surface-container-lowest max-md:shadow-sm max-md:p-2">
-                                    <td class="py-4 px-6 font-semibold text-primary max-md:block max-md:py-3 max-md:px-4">
+                                <tr
+                                    class="hover:bg-surface transition-colors max-md:block max-md:mb-4 max-md:rounded-xl max-md:bg-surface-container-lowest max-md:shadow-sm max-md:p-2">
+                                    <td
+                                        class="py-4 px-6 font-semibold text-primary max-md:block max-md:py-3 max-md:px-4">
                                         PDF-отчёты для врача
-                                        <span class="block font-normal text-xs text-on-surface-variant">Структурированные сводки для врачебных визитов</span>
+                                        <span
+                                            class="block font-normal text-xs text-on-surface-variant">Структурированные
+                                            сводки для врачебных визитов</span>
                                     </td>
-                                    <td data-label="Yakraz + Med AI" class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5 max-md:py-3 max-md:px-4 max-md:justify-between max-md:text-right max-md:before:content-[attr(data-label)] max-md:before:font-normal max-md:before:text-outline">
+                                    <td data-label="Yakraz + Med AI"
+                                        class="py-4 px-6 text-secondary font-semibold flex items-center gap-1.5 max-md:py-3 max-md:px-4 max-md:justify-between max-md:text-right max-md:before:content-[attr(data-label)] max-md:before:font-normal max-md:before:text-outline">
                                         <span class="material-symbols-outlined text-[18px]">check_circle</span>
                                         Форматированный PDF в один клик
                                     </td>
-                                    <td data-label="Обычные напоминания" class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">Только экспорт в CSV</td>
-                                    <td data-label="Облачные AI-чат-боты" class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">Неформатированный текст</td>
+                                    <td data-label="Обычные напоминания"
+                                        class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">
+                                        Только экспорт в CSV</td>
+                                    <td data-label="Облачные AI-чат-боты"
+                                        class="py-4 px-6 text-outline max-md:flex max-md:items-center max-md:justify-between max-md:gap-3 max-md:py-3 max-md:px-4 max-md:before:content-[attr(data-label)] max-md:before:font-medium max-md:before:text-outline max-md:text-right">
+                                        Неформатированный текст</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -740,16 +1275,27 @@
                 </div>
             </section>
             <!-- SECTION 6: INSPIRING FINAL CTA -->
-            <section
+            <section id="cta"
                 class="w-full bg-gradient-to-b from-surface to-surface-container py-24 lg:py-32 relative overflow-hidden">
                 <div class="max-w-5xl mx-auto px-6 lg:px-12 text-center relative z-10">
                     <!-- Icon Emblem -->
                     <div
-                        class="w-16 h-16 rounded-2xl bg-primary-container text-secondary-container flex items-center justify-center mx-auto mb-8 shadow-xl">
+                        class="animate-float w-16 h-16 rounded-2xl bg-primary-container text-secondary-container flex items-center justify-center mx-auto mb-8 shadow-xl">
                         <span class="material-symbols-outlined text-[32px]">health_and_safety</span>
                     </div>
-                    <h2 class="font-headline-xl text-headline-xl text-primary font-extrabold tracking-tight mb-6">Более разумный подход к заботе о здоровье</h2>
-                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed mb-6">Вам не нужны таблицы, чтобы помнить о таблетках, планировщик — для записей и коробка — для бумажных документов. Yakraz объединяет всё это — и передаёт ассистенту, который думает за вас.</p>
+                    <h2 class="font-headline-xl text-headline-xl text-primary font-extrabold tracking-tight mb-6">Более
+                        разумный подход к заботе о здоровье</h2>
+                    <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed mb-6">
+                        Вам не нужны таблицы, чтобы помнить о таблетках, планировщик — для записей и коробка — для
+                        бумажных документов. Yakraz объединяет всё это — и передаёт ассистенту, который думает за вас.
+                    </p>
+                    <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+                        <a class="magnetic ripple cta-animated inline-flex items-center gap-3 px-8 py-4 rounded-full text-on-primary font-headline-sm text-body-md font-semibold shadow-xl hover:shadow-2xl"
+                            data-coming-soon href="#">
+                            <span class="material-symbols-outlined text-[22px]">file_download</span>
+                            <span>Скачать Yakraz</span>
+                        </a>
+                    </div>
                 </div>
             </section>
         </div>
@@ -763,17 +1309,20 @@
                         <div
                             class="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center text-secondary-container">
                             <span class="material-symbols-outlined text-[20px]">vital_signs</span>
-                        </div><span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">Yakraz</span>
+                        </div><span
+                            class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">Yakraz</span>
                     </div>
-                    <p class="font-body-md text-body-md text-on-surface-variant mb-6 max-w-sm">Персонализированная и приватная клиническая аналитика: отслеживание биометрических данных, сверка фармакотерапии и точное сопровождение записей к врачу. Med AI работает на базе Claude от Anthropic — ваши данные не используются для обучения моделей.</p>
+                    <p class="font-body-md text-body-md text-on-surface-variant mb-6 max-w-sm">Персонализированная и
+                        приватная клиническая аналитика: отслеживание биометрических данных, сверка фармакотерапии и
+                        точное сопровождение записей к врачу.</p>
                 </div>
             </div>
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
                 <p class="font-body-sm text-body-sm text-on-surface-variant">© 2026 Yakraz. Все права защищены.</p>
                 <div class="flex items-center gap-6 font-body-sm text-body-sm text-on-surface-variant"><a
                         class="hover:text-primary transition-colors" data-path="security-and-privacy" data-coming-soon
-                        href="#">Приватность</a><a class="hover:text-primary transition-colors" data-path="security-and-privacy"
-                        data-coming-soon href="#">Условия использования</a><a
+                        href="#">Приватность</a><a class="hover:text-primary transition-colors"
+                        data-path="security-and-privacy" data-coming-soon href="#">Условия использования</a><a
                         class="hover:text-primary transition-colors" data-path="security-and-privacy" data-coming-soon
                         href="#">Протокол безопасности</a></div>
             </div>
@@ -802,13 +1351,19 @@
                     class="coming-soon-icon mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl bg-primary-container text-secondary-container shadow-[0_12px_24px_-8px_rgba(13,59,130,0.5)]">
                     <span class="material-symbols-outlined text-[36px]">construction</span>
                 </div>
-                <h3 id="comingSoonTitle" class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">Скоро</h3>
-                <p class="mt-3 font-body-md text-body-md text-on-surface-variant leading-relaxed">Мы добавляем финальные штрихи. Скоро всё будет доступно — спасибо за терпение!</p>
+                <h3 id="comingSoonTitle"
+                    class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">Скоро</h3>
+                <p class="mt-3 font-body-md text-body-md text-on-surface-variant leading-relaxed">Мы добавляем финальные
+                    штрихи. Скоро всё будет доступно — спасибо за терпение!</p>
                 <button type="button" data-dialog-close
                     class="mt-7 inline-flex items-center justify-center px-7 py-3 rounded-full bg-primary text-on-primary font-headline-sm text-body-sm font-semibold tracking-wide hover:bg-primary-container transition-all duration-200 shadow-[0_4px_16px_-2px_rgba(13,59,130,0.3)] active:scale-[0.98]">Понятно</button>
             </div>
         </div>
     </div>
+    <!-- BACK TO TOP -->
+    <button id="backToTop" type="button" aria-label="Наверх">
+        <span class="material-symbols-outlined text-[22px]">arrow_upward</span>
+    </button>
 </body>
 
 </html>
